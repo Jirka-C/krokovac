@@ -1,0 +1,28 @@
+.topPanel{
+  position: absolute;
+  top: 20px;
+  right: 20px;
+
+  &__users{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 5px;
+    visibility: hidden;
+    opacity: 0;
+    transition: $transition;
+
+    &--active{
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+
+  &__avatar{
+    width: 30px;
+    height: 30px;
+    border-radius: 30px;
+    overflow: hidden;
+    cursor: pointer;
+  }
+}

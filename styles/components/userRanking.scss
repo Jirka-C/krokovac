@@ -1,0 +1,90 @@
+.userRanking{
+  margin: 3rem 0;
+
+  &__row{
+    display: flex;
+    padding: 5px 0;
+    padding-right: 10px;
+    align-items: stretch;
+    gap: 10px;
+
+    &:nth-child(odd){
+      background: lighten($color: $primary, $amount: 50%);
+    }
+
+    &--header{
+      padding: 10px;
+      color: white;
+      background: $primary !important;
+    }
+  }
+
+  &__header{
+    &-name{
+      margin-left: 30px;
+      min-width: 151px;
+    }
+
+    &-meters{
+      margin-left: auto;
+    }
+  }
+
+  &__rank{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: $primary;
+    color: white;
+    font-weight: 800;
+    width: 30px;
+  }
+
+  &__avatar{
+    display: flex;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 30px;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  &__name{
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    color: $primary;
+    min-width: 111px;
+  }
+
+  &__steps{
+    display: flex;
+    align-items: center;
+  }
+
+  &__meters{
+    display: flex;
+    align-items: center;
+    font-size: 0.8rem;
+    margin-left: auto;
+  }
+
+  @media (max-width: $mobile){
+    margin: 1rem;
+
+    &__rank{
+      width: 25px;
+    }
+
+    &__header{
+      &-name{
+        min-width: 110px;
+      }
+    }
+
+    &__name{
+      min-width: 75px;
+    }
+  }
+}

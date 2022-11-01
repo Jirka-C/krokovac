@@ -1,0 +1,43 @@
+.toasts{
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  bottom: 20px;
+  left: 20px;
+
+  &__item{
+    position: relative;
+    padding: 20px 40px;
+    padding-right: 80px;
+    line-height: 1.5;
+    margin-top: 10px;
+    color: white;
+    font-weight: 600;
+
+    &::before{
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 5px;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.2);
+    }
+
+    &--success{
+      background-color: #155724;
+    }
+
+    &--warning{
+        background-color: #ff5900;
+    }
+
+    &--error{
+        background-color: #cc0000;
+    }
+
+    &--info{
+        background-color: #17a2b8;
+    }      
+  }
+}

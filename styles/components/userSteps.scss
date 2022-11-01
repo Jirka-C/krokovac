@@ -1,0 +1,122 @@
+.userSteps{
+  margin: 3rem 0;
+
+  &__title{
+    font-size: 1.6rem;
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+
+  &__row{
+    display: flex;
+    padding-left: 10px;
+    align-items: stretch;
+    gap: 10px;
+    transition: $transition;
+  
+    &:nth-child(odd){
+      background: lighten($color: $primary, $amount: 50%);
+    }
+
+    &:hover{
+      background: lighten($color: $neutral, $amount: 50%);
+
+      .userSteps__edit{
+        visibility: visible;
+        opacity: 1;
+      }
+    }
+  
+    &--header{
+      padding: 10px;
+      color: white;
+      background: $primary !important;
+    }
+
+    input{
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.8rem;
+    }
+  }
+
+  &__header{
+    &-date{
+      min-width: 180px;
+    }
+
+    &-meters{
+      margin-left: auto;
+    }
+  }
+
+  &__date{
+    display: flex;
+    align-items: center;    
+    min-width: 180px;
+
+    &--error{
+      border: 1px solid crimson
+    }
+  }
+
+  &__meters{
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+  }
+
+  &__steps{
+    display: flex;
+    align-items: center;
+
+    &--error{
+      border: 1px solid crimson
+    }
+  }
+
+  &__total{
+    min-width: 180px;
+  }
+
+  &__edit{
+    height: 30px;
+    padding: 8px;
+    transition: $transition;
+    cursor: pointer;
+  }
+
+  @media (max-width: $mobile){
+    margin: 1rem ;
+
+    &__row{
+
+      input{
+        width: 100%;
+      }
+
+      &--edit{
+        .userSteps__edit{
+          margin-left: auto;
+        }
+
+        .userSteps__meters{
+          display: none;
+        }
+      }
+    }
+
+    &__header{
+      &-date{
+        min-width: 110px;
+      }
+    }
+
+    &__date{
+      min-width: 110px;
+    }
+
+    &__total{
+      min-width: 110px;
+    }    
+  }  
+}
