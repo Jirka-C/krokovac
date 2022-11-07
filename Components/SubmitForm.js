@@ -35,6 +35,7 @@ function SubmitForm({user, setTimeStamp, toasts, setToasts}) {
     )
     .then(function (response) {
       setTimeStamp(new Date())
+      setSteps(0)
     })
     .catch(function (error) {
       console.log(error);

@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 
 import { validateDate } from '../Helpers/validators'
 import { validateSteps } from '../Helpers/validators'
+import ConfirmModal from './ConfirmModal'
 
 function UserSteps({userSteps, totalSteps, setTimeStamp, userId}) {
 
@@ -13,6 +14,7 @@ function UserSteps({userSteps, totalSteps, setTimeStamp, userId}) {
   const [editingRow, setEditingRow] = useState(null)
   const [validDate, setValidDate] = useState(true)
   const [validSteps, setValidSteps] = useState(true)
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
 
   const editSteps = (stepId, steps, date) => {
     setEditingRow(stepId)
@@ -51,8 +53,26 @@ function UserSteps({userSteps, totalSteps, setTimeStamp, userId}) {
     });
   }
 
+  const deleteStep = (stepId) => {
+    if(!stepId){
+      return;
+    }
+
+    axios.delete(`${process.env.NEXT_PUBLIC_API_BASE_PATH}/save/delete/${stepId}`)
+    .then(function (response) {
+      setTimeStamp(new Date())
+      setShowDeleteModal(false)
+    })
+    .catch(function (error) {
+      console.log(error);
+    });    
+  }
+
   return (
     <div className='container'>
+
+      {showDeleteModal && <ConfirmModal setShowDeleteModal={setShowDeleteModal} confirmAction={deleteStep} deletedId={editingRow} />}
+
       <h2 className='userSteps__title'>{userSteps.length ? "Můj přehled" : "Zatím tady není ani krok"}</h2>
       {userSteps.length ? <div className='userSteps__row userSteps__row--header'>
         <div className='userSteps__header-date'>Datum</div>
@@ -83,7 +103,11 @@ function UserSteps({userSteps, totalSteps, setTimeStamp, userId}) {
           </div>
           <div className='userSteps__meters'>{(((step.steps * step.step_ratio).toFixed(0))/1000).toFixed(2)} km</div>
           <div className='userSteps__edit'>{step.id === editingRow
-            ? <img src='icons/save.svg' onClick={() => saveEdit(step.id, steps, date)} />
+            ? <>
+                <img src='icons/save.svg' onClick={() => saveEdit(step.id, steps, date)} />
+                <img src='icons/trash.svg' onClick={() => {setShowDeleteModal(true)}} />
+                <img src='icons/close.svg' onClick={() => setEditingRow(null)} />
+              </>
             : <img src='icons/edit.svg' onClick={() => editSteps(step.id, step.steps, step.date)} />}
           </div>
         </div>

@@ -33,6 +33,16 @@
       background: $primary !important;
     }
 
+    &--edit{
+      .userSteps__meters{
+        display: none;
+      }
+
+      .userSteps__edit{
+        margin-left: auto;
+      }      
+    }
+
     input{
       font-family: 'Montserrat', sans-serif;
       font-size: 0.8rem;
@@ -83,24 +93,26 @@
     padding: 8px;
     transition: $transition;
     cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+
+    img + img{
+      margin-left: 5px;
+    }
   }
 
   @media (max-width: $mobile){
     margin: 1rem ;
 
     &__row{
-
       input{
         width: 100%;
       }
 
       &--edit{
         .userSteps__edit{
-          margin-left: auto;
-        }
-
-        .userSteps__meters{
-          display: none;
+          min-width: 80px;
         }
       }
     }
