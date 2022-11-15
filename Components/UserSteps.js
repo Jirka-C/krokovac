@@ -5,7 +5,7 @@ import { validateDate } from '../Helpers/validators'
 import { validateSteps } from '../Helpers/validators'
 import ConfirmModal from './ConfirmModal'
 
-function UserSteps({userSteps, totalSteps, setTimeStamp, userId}) {
+function UserSteps({userSteps, totalSteps, setTimeStamp, userId, loggedUser}) {
 
   const formatNumber = (steps) => (steps.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "))
 
@@ -102,14 +102,16 @@ function UserSteps({userSteps, totalSteps, setTimeStamp, userId}) {
             : formatNumber(step.steps)}
           </div>
           <div className='userSteps__meters'>{(((step.steps * step.step_ratio).toFixed(0))/1000).toFixed(2)} km</div>
-          <div className='userSteps__edit'>{step.id === editingRow
-            ? <>
-                <img src='icons/save.svg' onClick={() => saveEdit(step.id, steps, date)} />
-                <img src='icons/trash.svg' onClick={() => {setShowDeleteModal(true)}} />
-                <img src='icons/close.svg' onClick={() => setEditingRow(null)} />
-              </>
-            : <img src='icons/edit.svg' onClick={() => editSteps(step.id, step.steps, step.date)} />}
-          </div>
+          {loggedUser.id === step.user_id && 
+            <div className='userSteps__edit'>{step.id === editingRow
+              ? <>
+                  <img src='icons/save.svg' onClick={() => saveEdit(step.id, steps, date)} />
+                  <img src='icons/trash.svg' onClick={() => {setShowDeleteModal(true)}} />
+                  <img src='icons/close.svg' onClick={() => setEditingRow(null)} />
+                </>
+              : <img src='icons/edit.svg' onClick={() => editSteps(step.id, step.steps, step.date)} />}
+            </div>          
+          }
         </div>
       ))} 
       {totalSteps && <div className='userSteps__row userSteps__row--header'>

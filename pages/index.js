@@ -35,6 +35,7 @@ function Home() {
       <div className='app'>
         {pending ? <Pending /> : 
           <UserContext.Provider value={setUser}>
+            {console.log(user)}
             {!user ? <UserSelect /> : <UserProfile user={user}/>}
           </UserContext.Provider>
         }

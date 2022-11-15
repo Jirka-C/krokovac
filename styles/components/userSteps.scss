@@ -13,6 +13,7 @@
     align-items: stretch;
     gap: 10px;
     transition: $transition;
+    padding: 8px 10px;
   
     &:nth-child(odd){
       background: lighten($color: $primary, $amount: 50%);
@@ -89,8 +90,7 @@
   }
 
   &__edit{
-    height: 30px;
-    padding: 8px;
+    height: 15px;
     transition: $transition;
     cursor: pointer;
     display: flex;

@@ -7,31 +7,46 @@ import UserSteps from './UserSteps'
 import SubmitForm from './SubmitForm'
 
 function UserProfile({user}) {
+
+  const [loggedUser, setLoggedUser] = useState(user);
+  const [activeUser, setActiveUser] = useState(user);
   const [timeStamp, setTimeStamp] = useState(new Date());
 
+  useEffect(() => {
+    setActiveUser(user)
+    setLoggedUser(user)
+  }, [user])
+  
+
   const {data: ranking, loading: rankingLoading, error: rankingError} =  useGetData(`${process.env.NEXT_PUBLIC_API_BASE_PATH}/steps/ranking/`, timeStamp);
-  const {data: userSteps, loading: stepsLoading, error: stepsError} =  useGetData(`${process.env.NEXT_PUBLIC_API_BASE_PATH}/steps/steps/${user.id}`, timeStamp);
+  const {data: userSteps, loading: stepsLoading, error: stepsError} =  useGetData(`${process.env.NEXT_PUBLIC_API_BASE_PATH}/steps/steps/${activeUser.id ?? activeUser.user_id}`, timeStamp);
 
   return (
     <>
-      <TopPanel activeUser={user} />
+      <TopPanel activeUser={loggedUser} />
 
       <div id="formAnchor"></div>
       <section className='userProfile'>
-        <div className='userProfile__name'>{user.name}</div>
+        <div className='userProfile__name'>{activeUser.name}</div>
         <div className='userProfile__avatar'>
-          <img src={`avatars/${user.avatar}`} alt={user.name} />
+          <img src={`avatars/${activeUser.avatar}`} alt={activeUser.name} />
         </div>
       </section>
 
-      <SubmitForm user={user} setTimeStamp={setTimeStamp} />
+      <SubmitForm user={activeUser} setTimeStamp={setTimeStamp} />
 
       <div className='userRanking'>
-        {!ranking ? <Pending /> : <UsersRanking ranking={ranking.ranking} />}
+        {!ranking ? <Pending /> : <UsersRanking ranking={ranking.ranking} setActiveUser={setActiveUser} />}
       </div>
 
       <div className='userSteps'>
-        {!userSteps ? <Pending /> : <UserSteps userSteps={userSteps.userSteps} totalSteps={userSteps.totalSteps} setTimeStamp={setTimeStamp} userId={user.id} />}
+        {!userSteps
+          ? <Pending />
+          : <UserSteps userSteps={userSteps.userSteps}
+                       totalSteps={userSteps.totalSteps}
+                       setTimeStamp={setTimeStamp}
+                       userId={activeUser.user_id}
+                       loggedUser={loggedUser} />}
       </div>
     </>
   )

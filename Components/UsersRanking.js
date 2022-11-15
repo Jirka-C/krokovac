@@ -1,6 +1,6 @@
 import React from 'react'
 
-function UsersRanking({ranking}) {
+function UsersRanking({ranking, setActiveUser}) {
 
   const formatNumber = (steps) => (steps.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "))
 
@@ -15,10 +15,10 @@ function UsersRanking({ranking}) {
       {ranking.map( (rank, index) => (
         <div className='userRanking__row' key={rank.user_id}>
           <div className='userRanking__rank'>{index + 1}</div>
-          <div className='userRanking__avatar'>
+          <div className='userRanking__avatar' onClick={() => setActiveUser(rank)}>
             <img src={`avatars/${rank.avatar}`} alt={rank.name}/>
           </div>
-          <div className='userRanking__name'>{rank.name}</div>
+          <div className='userRanking__name' onClick={() => setActiveUser(rank)}>{rank.name}</div>
           <div className='userRanking__steps'>{formatNumber(rank.total_steps)}</div>
           <div className='userRanking__meters'>({(parseFloat(rank.total_steps * rank.step_ratio).toFixed(0)/1000).toFixed(2)} km)</div>
         </div>        
