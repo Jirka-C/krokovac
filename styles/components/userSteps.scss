@@ -10,7 +10,7 @@
   &__row{
     display: flex;
     padding-left: 10px;
-    align-items: stretch;
+    align-items: center;
     gap: 10px;
     transition: $transition;
     padding: 8px 10px;
@@ -47,6 +47,7 @@
     input{
       font-family: 'Montserrat', sans-serif;
       font-size: 0.8rem;
+      background: white;
     }
   }
 
