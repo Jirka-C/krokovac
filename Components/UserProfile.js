@@ -33,7 +33,7 @@ function UserProfile({user}) {
         </div>
       </section>
 
-      {loggedUser.id === activeUser.user_id && <SubmitForm user={activeUser} setTimeStamp={setTimeStamp} />}
+      {(loggedUser.id === (activeUser.user_id ?? activeUser.id)) && <SubmitForm user={activeUser} setTimeStamp={setTimeStamp} />}
 
       <div className='userRanking'>
         {!ranking ? <Pending /> : <UsersRanking ranking={ranking.ranking} setActiveUser={setActiveUser} />}
