@@ -45,7 +45,7 @@ function UserProfile({user}) {
           : <UserSteps userSteps={userSteps.userSteps}
                        totalSteps={userSteps.totalSteps}
                        setTimeStamp={setTimeStamp}
-                       userId={activeUser.user_id}
+                       userId={activeUser.id ?? activeUser.user_id}
                        loggedUser={loggedUser} />}
       </div>
     </>
