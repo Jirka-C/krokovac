@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { validateDate } from '../Helpers/validators'
 import { validateSteps } from '../Helpers/validators'
 
-function SubmitForm({user, setTimeStamp, toasts, setToasts}) {
+function SubmitForm({user, setTimeStamp}) {
 
   const [date, setDate] = useState(new Date().toLocaleString('sv').split(' ')[0])
   const [steps, setSteps] = useState(0)
@@ -27,7 +27,7 @@ function SubmitForm({user, setTimeStamp, toasts, setToasts}) {
       return
     }
 
-    axios.post(`${process.env.NEXT_PUBLIC_API_BASE_PATH}/save/save/${user.id}`,
+    axios.post(`${process.env.NEXT_PUBLIC_API_BASE_PATH}/save/save/${user.id ?? user.user_id}`,
       JSON.stringify({
         date: date,
         steps: steps
