@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-function useGetData(url, timeStamp){
+function useGetData(url, dateString, timeStamp){
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(null);
   const [error, setError] = useState(null);
@@ -13,7 +13,12 @@ function useGetData(url, timeStamp){
 
     const source = axios.CancelToken.source();
 
-    axios.get(url, {cancelToken: source.token})
+    axios.get(url, {
+      cancelToken: source.token,
+      params: {
+        dateString: dateString
+      }
+    })
     .then(res => {
       setLoading(false);
       setData(res.data)
@@ -26,7 +31,7 @@ function useGetData(url, timeStamp){
     return () => {
       source.cancel();
     }
-  }, [url, timeStamp])
+  }, [url, timeStamp, dateString])
 
   return { data, loading, error }
   
