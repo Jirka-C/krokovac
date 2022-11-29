@@ -43,7 +43,7 @@ function UserProfile({user}) {
           <div className='calendar__content'>
             <button className='calendar__button' onClick={() => setSelectedDate((current) => current - 1)}>&#11164;</button>
             <div className='calendar__month-name'>
-              {new Date(timeStamp.getFullYear(), timeStamp.getMonth() + selectedDate - 1, 1).toLocaleDateString('default', {month: 'long'})}
+              {new Date(timeStamp.getFullYear(), timeStamp.getMonth() + selectedDate - 1, 1).toLocaleDateString('default', {year: 'numeric', month: 'long'})}
             </div>
             <button className='calendar__button' onClick={() => setSelectedDate((current) => current + 1)}>&#11166;</button>
           </div>
