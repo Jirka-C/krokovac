@@ -32,8 +32,9 @@
     height: 34px;
     background: white;
     display:block;
-    -webkit-appearance: textfield;
-    -moz-appearance: textfield;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
 
     &--button{
       background: $primary;
