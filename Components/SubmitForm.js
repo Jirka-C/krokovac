@@ -1,14 +1,18 @@
 import axios from 'axios'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { validateDate } from '../Helpers/validators'
 import { validateSteps } from '../Helpers/validators'
+import getToastData from '../Helpers/getToastData';
 
 function SubmitForm({user, setTimeStamp}) {
 
+  let counter;
   const [date, setDate] = useState(new Date().toLocaleString('sv').split(' ')[0])
   const [steps, setSteps] = useState(0)
   const [validDate, setValidDate] = useState(true)
   const [validSteps, setValidSteps] = useState(true)
+  const [toasts, setToasts] = useState([])
+  const [sending, setSending] = useState(false)
   
   const dateChange = (date) => {
     setDate(date.value)
@@ -22,11 +26,13 @@ function SubmitForm({user, setTimeStamp}) {
 
   const onSubmit = (e) => {
     e.preventDefault()
+    const randId = Math.floor(Math.random()*100)
 
-    if(!validDate || !validSteps){
+    if(!validDate || !validSteps || sending){
       return
     }
 
+    setSending(true)
     axios.post(`${process.env.NEXT_PUBLIC_API_BASE_PATH}/save/save/${user.id ?? user.user_id}`,
       JSON.stringify({
         date: date,
@@ -35,12 +41,30 @@ function SubmitForm({user, setTimeStamp}) {
     )
     .then(function (response) {
       setTimeStamp(new Date())
-      setSteps(0)
+      setToasts( prevState => ([...prevState, getToastData(randId)[response.status]]))
     })
-    .catch(function (error) {
-      console.log(error);
+    .catch((error) => {
+      setToasts( prevState => ([...prevState, getToastData(randId)[error.response.status]]))
+    })
+    .finally(() => {
+      setSteps(0)
+      setSending(false)
+      counter = setTimeout(() => {
+        setToasts(prevState => prevState.slice(1))
+      }, 10000)
     });
   }
+
+  const closeToast = (id) => {
+    setToasts(prevState => prevState.filter(toast => toast.id !== id))
+  }
+
+  useEffect(() => {
+    return() => {
+      clearInterval(counter)
+    }
+  },[])
+  
 
   return (
     <section className='submitForm'>
@@ -60,10 +84,21 @@ function SubmitForm({user, setTimeStamp}) {
           </div>
 
           <div className='submitForm__block submitForm__block--button'>
-            <button className='submitForm__input submitForm__input--button' type="submit" disabled={!validDate || !validSteps || !steps}>Uložit</button>
+            <button className='submitForm__input submitForm__input--button' type="submit" disabled={!validDate || !validSteps || !steps || sending}>
+              {sending ? <span className='submitForm__loading'></span> : "Uložit"}
+            </button>
             {!validSteps || !validDate || steps ? <label className='submitForm__error'>&nbsp;</label> : null}
           </div>
         </form>
+
+        {toasts.length ? <div className='toasts'>
+          {toasts.map( (toast, index) => <div className={`toasts__item toasts__item--${toast.role}`} key={index}>
+            <div className='toasts__close' onClick={() => closeToast(toast.id)}>&times;</div>
+            <div className='toasts__content'>
+              {toast.text}
+            </div>
+          </div>)}
+        </div> : null}
       </div>
     </section>
   )

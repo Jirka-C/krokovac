@@ -1,27 +1,25 @@
-const getToastData = (status) => {
-  let role = null;
-  let text = null;
+const getToastData = (id) => {
 
-  switch (status) {
-      case 500:
-          role = "error"
-          text = "Nepodařilo se připojit k databázi. Zkuste to prosím za pár minut."
-          break;            
-      case 404:
-          role = "error"
-          text = "Požadovanou hru se nepodařilo načíst. Zkontrolujte, jestli máte správný odkaz"
-          break;
-      case 1:
-          role = "success"
-          text = "Kroky byly uloženy"
-          break;
-      default:
-          role = "info"
-          text = "INFO"
-          break;
+  return {
+    500: {
+      id: id,
+      role: "error",
+      header: "Chyba",
+      text: "Chyba při ukládání. Kontaktujte nejvyššího vládce jedniček a nul."
+    },
+    200: {
+      id: id,
+      role: "success",
+      header: "OK",
+      text: "Kroky byly uloženy."
+    },
+    0: {
+      id: id,
+      role: "info",
+      header: "INFO",
+      text: "INFO"
+    }
   }
-
-  return {role, text}
 }
 
 export default getToastData

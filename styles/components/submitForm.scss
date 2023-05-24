@@ -37,6 +37,8 @@
     -moz-appearance: none;
 
     &--button{
+      display: flex;
+      justify-content: center;
       background: $primary;
       color: white;
       text-transform: uppercase;
@@ -50,6 +52,25 @@
       &:disabled{
         opacity: 0.5;
       }
+    }
+  }
+
+  &__loading{
+    display: flex;
+    width: 15px;
+    height: 15px;
+    border: 2px solid white;
+    border-top: 2px solid transparent;
+    border-radius: 100%;
+    animation: rotate 2s linear 0s infinite;
+  }
+
+  @keyframes rotate {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
     }
   }
 

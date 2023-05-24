@@ -4,11 +4,13 @@
   flex-direction: column;
   bottom: 20px;
   left: 20px;
+  width: calc(100% - 40px);
+  max-width: 360px;
 
   &__item{
     position: relative;
-    padding: 20px 40px;
-    padding-right: 80px;
+    padding: 20px;
+    padding-right: 60px;
     line-height: 1.5;
     margin-top: 10px;
     color: white;
@@ -39,5 +41,16 @@
     &--info{
         background-color: #17a2b8;
     }      
+  }
+
+
+  &__close{
+    position: absolute;
+    top: 0;
+    right: 3px;
+    font-size: 3rem;
+    font-weight: 100;
+    line-height: 0.7;
+    cursor: pointer;
   }
 }
