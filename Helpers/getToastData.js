@@ -7,6 +7,12 @@ const getToastData = (id) => {
       header: "Chyba",
       text: "Chyba při ukládání. Kontaktujte nejvyššího vládce jedniček a nul."
     },
+    403: {
+      id: id,
+      role: "error",
+      header: "Chyba",
+      text: "Jen pět dní pozpátku, víc to nepůjde"
+    },    
     200: {
       id: id,
       role: "success",
